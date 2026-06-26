@@ -475,12 +475,21 @@
       box-shadow: 0 10px 25px rgba(62, 78, 62, 0.05);
     }
 
-    .feature-num {
-      font-family: var(--font-title);
-      font-size: 1.8rem;
+    .feature-img {
+      width: 76px;
+      height: 76px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(197, 160, 89, 0.15);
+      flex-shrink: 0;
+    }
+
+    .feature-info h3 span {
       color: var(--color-gold);
+      font-family: var(--font-title);
+      margin-right: 8px;
       font-weight: 700;
-      line-height: 1;
+      font-size: 1.2rem;
     }
 
     .feature-info h3 {
@@ -1026,36 +1035,36 @@
         <div class="features-list reveal" style="transition-delay: 0.2s;">
           <!-- Feature 1 -->
           <div class="feature-card">
-            <div class="feature-num">01</div>
+            <img src="feature_obs.png" alt="정밀한 환경 관찰" class="feature-img">
             <div class="feature-info">
-              <h3>정밀한 환경 관찰 (Observation)</h3>
+              <h3><span>01</span>정밀한 환경 관찰 (Observation)</h3>
               <p>스마트 IoT 센서가 온도, 습도, 유해 물질을 실시간으로 확인하고 반려동물의 안정을 위한 디테일한 데이터를 매 순간 분석합니다.</p>
             </div>
           </div>
 
           <!-- Feature 2 -->
           <div class="feature-card">
-            <div class="feature-num">02</div>
+            <img src="feature_presc.png" alt="개인화 맞춤 아로마 처방" class="feature-img">
             <div class="feature-info">
-              <h3>개인화 맞춤 아로마 처방 (Prescription)</h3>
+              <h3><span>02</span>개인화 맞춤 아로마 처방 (Prescription)</h3>
               <p>수집된 컨디션에 맞춰 유기농 천연 에센셜 오일 배합을 매치합니다. 아이의 심리 상태와 피로도에 따라 최적의 힐링 레시피를 제안합니다.</p>
             </div>
           </div>
 
           <!-- Feature 3 -->
           <div class="feature-card">
-            <div class="feature-num">03</div>
+            <img src="feature_care.png" alt="자동 제어 디퓨징" class="feature-img">
             <div class="feature-info">
-              <h3>자동 제어 디퓨징 (Auto-Care)</h3>
+              <h3><span>03</span>자동 제어 디퓨징 (Auto-Care)</h3>
               <p>코코숨쉼 전자아로마디퓨저는 향의 강도와 발향 패턴을 AI 알고리즘에 따라 무자극으로 매끄럽고 편안하게 조절합니다.</p>
             </div>
           </div>
 
           <!-- Feature 4 -->
           <div class="feature-card">
-            <div class="feature-num">04</div>
+            <img src="feature_sub.png" alt="정기 구독 및 교체 서비스" class="feature-img">
             <div class="feature-info">
-              <h3>정기 구독 및 교체 서비스 (Subscription)</h3>
+              <h3><span>04</span>정기 구독 및 교체 서비스 (Subscription)</h3>
               <p>매번 번거롭게 아로마 리필을 구입할 필요 없이, 맞춤 분석 결과에 부합하는 리필 카트리지를 매달 신선한 상태로 정기 배송해 드립니다.</p>
             </div>
           </div>
