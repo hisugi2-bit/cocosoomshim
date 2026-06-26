@@ -66,6 +66,12 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      
+      /* Subtle Leaf Shadow Background (top-right) */
+      background-image: url('bg_shadow.png');
+      background-position: right -150px top -100px;
+      background-repeat: no-repeat;
+      background-size: 750px;
     }
 
     /* Scrollbar Styling */
@@ -512,6 +518,12 @@
        ========================================================================== */
     .order-section {
       background-color: var(--bg-beige-light);
+      
+      /* Subtle Leaf Shadow Background (bottom-left) */
+      background-image: url('bg_shadow.png');
+      background-position: left -150px bottom -50px;
+      background-repeat: no-repeat;
+      background-size: 650px;
     }
 
     .steps-container {
@@ -523,32 +535,58 @@
 
     .step-card {
       background-color: var(--bg-beige);
-      padding: 30px 24px;
+      padding: 40px 24px 30px 24px;
       border-radius: 20px;
-      border: 1px solid rgba(197, 160, 89, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.15);
       text-align: center;
       position: relative;
       transition: var(--transition-smooth);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.01);
+      overflow: hidden;
     }
 
     .step-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
       border-color: var(--color-gold);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+      box-shadow: 0 15px 35px rgba(62, 78, 62, 0.06);
+    }
+
+    .step-number {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      color: var(--color-gold);
+      font-weight: 700;
+      opacity: 0.8;
     }
 
     .step-icon {
-      width: 50px;
-      height: 50px;
-      background-color: var(--bg-beige-dark);
+      width: 60px;
+      height: 60px;
+      background-color: var(--bg-beige-light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px auto;
       color: var(--color-olive);
-      font-weight: bold;
       border: 1px solid rgba(197, 160, 89, 0.2);
+      box-shadow: 0 4px 12px rgba(197, 160, 89, 0.06);
+      transition: var(--transition-smooth);
+    }
+
+    .step-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .step-card:hover .step-icon {
+      color: var(--color-gold-dark);
+      border-color: var(--color-gold);
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(197, 160, 89, 0.15);
     }
 
     .step-title {
@@ -1087,22 +1125,50 @@
       <!-- Step Timeline -->
       <div class="steps-container reveal">
         <div class="step-card">
-          <div class="step-icon">1</div>
+          <div class="step-number">01</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              <path d="M12 8c0 0-1.5 1.5-1.5 3a1.5 1.5 0 0 0 3 0c0-1.5-1.5-3-1.5-3z" stroke="var(--color-gold)"/>
+            </svg>
+          </div>
           <h3 class="step-title">상담 신청</h3>
           <p class="step-desc">카카오톡 또는 전화상담으로 반려동물 및 환경에 대한 맞춤 컨설팅을 시작합니다.</p>
         </div>
         <div class="step-card">
-          <div class="step-icon">2</div>
+          <div class="step-number">02</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v6M12 22a7 7 0 0 0 7-7c0-3.8-3.1-7-7-7s-7 3.2-7 7a7 7 0 0 0 7 7z"/>
+              <path d="M12 12v3" stroke="var(--color-gold)"/>
+            </svg>
+          </div>
           <h3 class="step-title">기기 & 맞춤 오일 매칭</h3>
           <p class="step-desc">아이의 기호성과 환경 요인을 AI 프로필에 등록하고 최초 맞춤 솔루션을 진단받습니다.</p>
         </div>
         <div class="step-card">
-          <div class="step-icon">3</div>
+          <div class="step-number">03</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12" stroke="var(--color-gold)"/>
+            </svg>
+          </div>
           <h3 class="step-title">배송 및 설치</h3>
           <p class="step-desc">전문 기기 세팅 및 스마트 가이드를 동봉하여 안전하고 신속하게 댁까지 발송합니다.</p>
         </div>
         <div class="step-card">
-          <div class="step-icon">4</div>
+          <div class="step-number">04</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <path d="M12 14l2 2-2 2" stroke="var(--color-gold)"/>
+            </svg>
+          </div>
           <h3 class="step-title">정기 처방 및 관리</h3>
           <p class="step-desc">사용 정보 피드백을 기반으로 더욱 정교해진 아로마 리필 카트리지가 매월 정기 배송됩니다.</p>
         </div>
