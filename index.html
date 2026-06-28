@@ -842,7 +842,7 @@
       color: rgba(250, 246, 240, 0.4);
     }
 
-    /* Floating Contact Button */
+    /* Floating Buttons (Contact & BGM) */
     .floating-contact {
       position: fixed;
       bottom: 30px;
@@ -851,6 +851,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      align-items: center;
     }
 
     .floating-btn {
@@ -863,6 +864,8 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       transition: var(--transition-smooth);
       cursor: pointer;
+      border: none;
+      outline: none;
     }
 
     .floating-btn:hover {
@@ -872,6 +875,44 @@
     .floating-kakao {
       background-color: #FEE500;
       color: #191919;
+    }
+
+    /* BGM Toggle Button Styling */
+    .floating-bgm {
+      background-color: var(--bg-beige-light);
+      border: 1px solid rgba(197, 160, 89, 0.35);
+      color: var(--color-olive);
+      box-shadow: 0 8px 24px rgba(197, 160, 89, 0.15);
+      padding: 0;
+    }
+
+    .floating-bgm:hover {
+      background-color: var(--bg-beige-dark);
+      border-color: var(--color-gold);
+      color: var(--color-gold-dark);
+    }
+
+    .floating-bgm.muted {
+      color: var(--text-muted);
+      border-color: rgba(197, 160, 89, 0.15);
+    }
+
+    .floating-bgm .wave-path {
+      transition: opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .floating-bgm.muted .wave-path {
+      opacity: 0;
+    }
+
+    .floating-bgm .mute-line {
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .floating-bgm.muted .mute-line {
+      opacity: 1;
     }
 
     /* ==========================================================================
@@ -1289,8 +1330,21 @@
     </div>
   </footer>
 
-  <!-- Floating Contact Buttons -->
+  <!-- BGM Audio element (loop enabled) -->
+  <audio id="bgm" src="bgm_cocosoomshim.mp3" loop preload="auto"></audio>
+
+  <!-- Floating Contact & BGM Buttons -->
   <div class="floating-contact">
+    <!-- BGM Toggle Button -->
+    <button id="bgmToggleBtn" class="floating-btn floating-bgm muted" title="배경음악 켜기" aria-label="배경음악 켜기/끄기">
+      <svg class="speaker-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path class="wave-path" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <line class="mute-line" x1="23" y1="9" x2="17" y2="15"></line>
+        <line class="mute-line" x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    </button>
+
     <!-- Kakao floating link -->
     <a href="https://pf.kakao.com" target="_blank" class="floating-btn floating-kakao" title="카카오톡 상담하기">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -1349,6 +1403,88 @@
         spans[1].style.opacity = '1';
         spans[2].style.transform = 'none';
       });
+    });
+
+    // --- Background Music (BGM) Controller ---
+    const bgm = document.getElementById('bgm');
+    const bgmToggleBtn = document.getElementById('bgmToggleBtn');
+    let bgmStarted = false;
+    const targetVolume = 0.25; // comfortable background music level
+
+    // Audio Fade-in Function
+    function fadeInBgm() {
+      bgm.volume = 0;
+      bgm.muted = false;
+      const playPromise = bgm.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          bgmToggleBtn.classList.remove('muted');
+          bgmToggleBtn.title = "배경음악 끄기";
+          
+          let volumeInterval = setInterval(() => {
+            if (bgm.volume < targetVolume) {
+              bgm.volume = Math.min(targetVolume, bgm.volume + 0.02);
+            } else {
+              clearInterval(volumeInterval);
+            }
+          }, 150);
+        }).catch(err => {
+          console.warn("Auto-play blocked by browser or audio file missing:", err);
+        });
+      }
+    }
+
+    // Initialize BGM on user interaction
+    function initBgm() {
+      if (bgmStarted) return;
+      bgmStarted = true;
+      fadeInBgm();
+      removeInteractionListeners();
+    }
+
+    function removeInteractionListeners() {
+      window.removeEventListener('click', initBgm);
+      window.removeEventListener('scroll', initBgm);
+      window.removeEventListener('touchstart', initBgm);
+      window.removeEventListener('keydown', initBgm);
+    }
+
+    // Listen to user interactions for autoplay
+    window.addEventListener('click', initBgm);
+    window.addEventListener('scroll', initBgm, { passive: true });
+    window.addEventListener('touchstart', initBgm, { passive: true });
+    window.addEventListener('keydown', initBgm);
+
+    // Mute/Unmute Toggle
+    bgmToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent window click listener from firing
+      
+      if (!bgmStarted) {
+        bgmStarted = true;
+        removeInteractionListeners();
+        fadeInBgm();
+        return;
+      }
+
+      if (bgm.paused || bgm.muted) {
+        bgm.muted = false;
+        if (bgm.paused) {
+          bgm.play().then(() => {
+            bgmToggleBtn.classList.remove('muted');
+            bgmToggleBtn.title = "배경음악 끄기";
+          }).catch(err => {
+            console.warn("Playback failed:", err);
+          });
+        } else {
+          bgmToggleBtn.classList.remove('muted');
+          bgmToggleBtn.title = "배경음악 끄기";
+        }
+      } else {
+        bgm.muted = true;
+        bgmToggleBtn.classList.add('muted');
+        bgmToggleBtn.title = "배경음악 켜기";
+      }
     });
   </script>
 </body>
